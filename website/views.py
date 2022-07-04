@@ -1,7 +1,11 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
+from django.contrib import messages
 from django.shortcuts import  render
 from django.core.files.storage import FileSystemStorage
+
+from .models import NewsletterUser
+from .forms import NewsletterUserSignUpForm
 
 def home(request):
 	return render(request, 'home.html', {})
@@ -102,3 +106,37 @@ def upload(request):
 
 def shop(request):
 	return render(request, 'shop.html', {})
+
+def enroll(request):
+	form = NewsletterUserSignUpForm(request.POST or None)
+
+	if form.is_valid():
+		instance = form.save(commit=False)
+		if NewsletterUser.objects.filter(email=instance.email).exists():
+			messages.warning(request, 'Your email already exists in our database', "alert alert-warning alert-dissmissible")
+		else:
+			instance.save()
+			messages.success(request, 'Your email has been submitted to our database', "alert alert-success alert-dissmissible")
+
+	context = {
+		'form': form,
+	}
+	template = "enroll.html"
+	return render(request, template, context)
+
+def unenroll(request):
+	form = NewsletterUserSignUpForm(request.POST or None)
+
+	if form.is_valid():
+		instance = form.save(commit=False)
+		if NewsletterUser.objects.filter(email=instance.email).exists():
+			NewsletterUser.objects.filter(email=instance.email).delete()
+			messages.success(request, 'Your email has been removed', "alert alert-success alert-dissmissible")
+		else:
+			messages.warning(request, 'Your email is not in the database', "alert alert-warning alert-dissmissible")
+
+	context = {
+		"form": form,
+	}
+	template = "unenroll.html"
+	return render(request, template, context)

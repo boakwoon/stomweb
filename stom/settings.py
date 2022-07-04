@@ -1,4 +1,7 @@
 import os
+import django_heroku
+import dj_database_url
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,12 +35,13 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'stom.urls'
@@ -63,12 +67,7 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-        'social_core.backends.facebook.FacebookOAuth2',
-        'social_core.backends.twitter.TwitterOAuth',
-        'social_core.backends.github.GithubOAuth2',
-
-        'django.contrib.auth.backends.ModelBackend',
-
+        ('django.contrib.auth.backends.ModelBackend'),
     )
 
 WSGI_APPLICATION = 'stom.wsgi.application'
@@ -76,6 +75,17 @@ WSGI_APPLICATION = 'stom.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.oracle',
+#        'NAME': 'orcl',
+#        'USER': 'django',
+#        'PASSWORD': 'django',
+#        'HOST': 'localhost',
+#        'PORT': '1521',
+#    }
+# }
+
 
 DATABASES = {
     'default': {
@@ -126,6 +136,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
@@ -149,3 +161,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+django_heroku.settings(locals())

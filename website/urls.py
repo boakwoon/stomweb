@@ -13,5 +13,7 @@ urlpatterns = [
 	path('forms.html', views.forms, name="forms"),
 	path('upload', views.upload, name="upload"),
 	path('shop.html', views.shop, name="shop"),
-
+	path('shop.html', views.shop, name="shop"),
+	path('enroll', views.enroll, name="enroll" ),
+	path('unenroll', views.unenroll, name="unenroll"),
 ]
