@@ -40,9 +40,5 @@ User's account. Login, Logout and Register system
 ![Снимок экрана 2022-04-11 150253](https://user-images.githubusercontent.com/74897530/162900133-2ee26a76-6e63-46fb-bdd4-8b62f03f44d5.jpg)
 
 
-# Presentation
-
-<a href="https://www.canva.com/design/DAE_6-VX82U/lxn13OqY9tTpcZs4y_5YTg/view?utm_content=DAE_6-VX82U&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank">Link to the Presentation</a>
-
 
 
